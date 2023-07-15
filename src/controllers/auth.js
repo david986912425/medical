@@ -4,7 +4,7 @@ const User = require('../models/user');
 const { generateJWT } = require("../helpers/jwt")
 const { sanitizeUserEmailInput } = require("../helpers/validaciones")
 
-const createUser = async(req, res = response) => {
+const createUser = async(req, res ) => {
     try {
         const { email, password } = req.body;
         const emailBody = sanitizeUserEmailInput(email);
@@ -44,7 +44,7 @@ const createUser = async(req, res = response) => {
     }
 }
 
-const login = async(req, res = response) => {
+const login = async(req, res) => {
     const { email, password } = req.body
 
     try {
@@ -85,7 +85,7 @@ const login = async(req, res = response) => {
     }
 }
 
-const renewToken = async(req, res = response) => {
+const renewToken = async(req, res) => {
 
     const uid = req.uid
 

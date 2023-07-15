@@ -3,7 +3,6 @@ const { check } = require('express-validator');
 const { getCategoria, createCategory, getCategoriaPorId, updateCategory, deleteCategory } = require('../controllers/category');
 const { validateFields } = require('../middlewares/validateFields');
 const { validateJWT } = require('../middlewares/validateJWT');
-// const { validarJWT, tieneRole } = require('../middlewares');
 
 /**
  * @swagger

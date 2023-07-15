@@ -2,7 +2,7 @@ const { response, request } = require("express");
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const { sanitizeUserEmailInput } = require("../helpers/validaciones")
-const usuariosGet = async(req = request, res = response) => {
+const usuariosGet = async(req = request, res) => {
 
     const { limite = 20, desde = 0 } = req.query;
 
@@ -19,7 +19,7 @@ const usuariosGet = async(req = request, res = response) => {
     });
 }
 
-const createUser = async(req, res = response) => {
+const createUser = async(req, res) => {
     try {
         const { email, role } = req.body
 
@@ -59,7 +59,7 @@ const createUser = async(req, res = response) => {
     }
 }
 
-const updateUser = async(req = request, res) => {
+const updateUser = async(req, res) => {
 
     const {id} = req.params;
     const { _id, password, email, ...resto} = req.body;

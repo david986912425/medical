@@ -34,6 +34,7 @@ const swaggerSpec = {
 
 // settings
 const app = express();
+app.disable("x-powered-by");
 const port = process.env.PORT || 9000;
 
 const whitelist = [

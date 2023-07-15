@@ -2,7 +2,7 @@ const { response } = require("express");
 const Category = require("../models/category");
 
 // obtenerCategorias - paginado - tottal
-const getCategoria = async(req = request, res = response) => {
+const getCategoria = async(req , res ) => {
 
     const { limite = 5, desde = 0 } = req.query;
 
@@ -20,7 +20,7 @@ const getCategoria = async(req = request, res = response) => {
     });
 }
 // //obtenerCategoria - populate {}
-const getCategoriaPorId = async(req = request, res = response) => {
+const getCategoriaPorId = async(req , res ) => {
 
     const _id = req.params.id;
     const category = await Category.findById(_id);
@@ -34,7 +34,7 @@ const getCategoriaPorId = async(req = request, res = response) => {
 }
 
 // //Crear Category
-const createCategory = async(req, res=response) => {
+const createCategory = async(req, res) => {
     const name = req.body.name.toLowerCase();
     
     const categoriaDB = await Category.findOne({name});
@@ -58,7 +58,7 @@ const createCategory = async(req, res=response) => {
 }
 
 // //actualizar Category
-const updateCategory = async(req = request, res) => {
+const updateCategory = async(req , res) => {
 
     const {id} = req.params;
     const name = req.body.name.toLowerCase();
