@@ -1,20 +1,11 @@
 const { response, request } = require("express");
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
-
+const { sanitizeUserEmailInput } = require("../helpers/validaciones")
 const usuariosGet = async(req = request, res = response) => {
 
-    //const query = req.query;
-  //  const {q, nombre='no name', page = 1,limit} = req.query;
     const { limite = 20, desde = 0 } = req.query;
-    // const query = {estado:true};
-/*
-    const usuarios = await Usuario.find({ query })
-        .skip(Number(desde))
-        .limit(Number(limite));
 
-    const total = await Usuario.countDocuments(query);
-*/
     const [total, usuarios] = await Promise.all([
 
         User.countDocuments(),
@@ -31,15 +22,10 @@ const usuariosGet = async(req = request, res = response) => {
 const createUser = async(req, res = response) => {
     try {
         const { email, role } = req.body
-        // const uid = req.uid;
-        // const currentUser = await User.findById(uid)
-        // if (currentUser.role !== 'admin') {
-        //     return res.status(401).json({
-        //         msg: 'No tiene privilegios para crear un usuario'
-        //     })
-        // }
 
-        const existEmail = await User.findOne({ email })
+        const emailBody = sanitizeUserEmailInput(email);
+
+        const existEmail = await User.findOne({ email: emailBody });
         if (existEmail) {
             return res.status(400).json({
                 ok: false,

@@ -2,17 +2,21 @@ const { response } = require("express")
 const bcryptjs = require("bcryptjs")
 const User = require('../models/user');
 const { generateJWT } = require("../helpers/jwt")
+const { sanitizeUserEmailInput } = require("../helpers/validaciones")
 
 const createUser = async(req, res = response) => {
     try {
-        const { email, password } = req.body
-        const existEmail = await User.findOne({ email })
+        const { email, password } = req.body;
+        const emailBody = sanitizeUserEmailInput(email);
+
+        const existEmail = await User.findOne({ email: emailBody });
         if (existEmail) {
             return res.status(400).json({
                 ok: false,
                 msg: 'El correo ya está registrado'
-            })
+            });
         }
+
 
         const user = new User(req.body)
 
@@ -45,7 +49,9 @@ const login = async(req, res = response) => {
 
     try {
         // Verificar si existe el correo
-        const userDB = await User.findOne({ email })
+        const emailBody = sanitizeUserEmailInput(email);
+
+        const userDB = await User.findOne({ email: emailBody });
         if (!userDB) {
             return res.status(404).json({
                 ok: false,

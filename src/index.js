@@ -42,18 +42,13 @@ const whitelist = [
     'http://localhost:9000',
 ];
 
-// middlewares
-// app.use(cors({
-//     // origin: whitelist,
-//     // origin: function (origin, callback) {
-//     //     if (whitelist.indexOf(origin) !== -1) {
-//     //         callback(null, true);
-//     //     } else {
-//     //         callback(new Error('No tienes permiso para consumir este servicio'));
-//     //     }
-//     // }
-// }))
-app.use(cors())
+let corsOptions = {};
+
+if (process.env.URL_FRONTEND) {
+  corsOptions.origin = process.env.URL_FRONTEND;
+}
+
+app.use(cors(corsOptions));
 app.use( express.json());
 app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
 

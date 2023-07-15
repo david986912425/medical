@@ -1,5 +1,7 @@
 const Category = require("../models/category");
 const Product = require("../models/product");
+const { sanitizeUserInput } = require("../helpers/validaciones")
+
 
 const createProduct = async(req, res) => {
     const {categoria, nombre} = req.body
@@ -11,7 +13,9 @@ const createProduct = async(req, res) => {
         })
     }
 
-    const productoDB = await Product.findOne({nombre});
+    const sanitizedNombre = sanitizeUserInput(nombre); 
+    const productoDB = await Product.findOne({ nombre: sanitizedNombre });
+
 
     if (productoDB) {
         return res.status(400).json({
@@ -28,16 +32,6 @@ const createProduct = async(req, res) => {
 const getProducts = async(req, res) => {
     const { search } = req.query
     const regex = new RegExp(search,'i')
-    // Product
-    //     .find({
-    //         // $or: [{nombre: regex}, {categoria: regex}],
-    //         $or: [{nombre: regex}],
-    //     })
-    //     // .select('nombre precio -_id')
-    //     // .lean()
-    //     .then(( data ) => res.json( data ))
-    //     .catch(( error ) => res.json({ message: error }));
-
         const products = await Product.find({
             $or: [{nombre: regex}],
         })
@@ -64,14 +58,7 @@ const getProductById = async(req, res) => {
 
 const updateProduct = async(req, res) => {
     const { id } = req.params;
-    const { nombre,
-            precio,
-            descripcion,
-            laboratorio,
-            stock,
-            vencimiento,
-            imagen,
-            categoria } = req.body;
+    const { nombre, categoria } = req.body;
 
     const idcategoria = categoria ? await Category.findById(categoria) : true
     
@@ -81,7 +68,9 @@ const updateProduct = async(req, res) => {
         })
     }
 
-    const productoDB = await Product.findOne({nombre});
+    const sanitizedNombre = sanitizeUserInput(nombre); 
+    const productoDB = await Product.findOne({ nombre: sanitizedNombre });
+
 
     if (productoDB && productoDB.nombre !== nombre) {
         return res.status(400).json({
