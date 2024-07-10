@@ -28,3 +28,5 @@ password: secret
 La documentación de los endpoints está disponible a través de Swagger:
 
 `http://localhost:9000/documentation`
+
+![Untitled](https://raw.githubusercontent.com/david986912425/medical/main/img/swagger.png)
