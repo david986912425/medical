@@ -35,7 +35,7 @@ const swaggerSpec = {
 // settings
 const app = express();
 app.disable("x-powered-by");
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 81;
 
 const whitelist = [
     'https://medical-farmacy.netlify.app/',
