@@ -1,11 +1,9 @@
 const sanitizeUserEmailInput = (input) => {
-  const sanitizedInput = input.replace(/[^a-zA-Z0-9@._-]/g, "");
-  return sanitizedInput;
+  return input.replace(/[^a-zA-Z0-9@._-]/g, "");
 };
 
 const sanitizeUserInput = (input) => {
-  const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, '');
-  return sanitizedInput;
+  return input.replace(/[^a-zA-Z0-9]/g, '');
 };
 
 module.exports = {

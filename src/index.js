@@ -64,9 +64,14 @@ app.get('/', (req, res) => {
     res.send('Bienvenido al backend de Medical')
 })
 
-// mongodb conection
-mongoose.connect( process.env.MONGODB_URI )
-.then( () => console.log('Conectado a MongoDB Atlas'))
-.catch( err => console.error(err));
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI)
+    .then(() => {
+        console.log('Conectado a MongoDB Atlas');
+    })
+    .catch((err) => {
+        console.error('No se pudo conectar:', err.message);
+    });
 
 app.listen( port, () => console.log(`Servidor escuchando en puerto: ${port}`));

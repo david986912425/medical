@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./mongodb/initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo-data:/data/db/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'root'
+      MONGO_INITDB_ROOT_PASSWORD: 'secret'
+    networks:
+      - medical-network
+    ports:
+      - "27017:27017"
+  medical_app:
+    image: "medical_app"
+    build:
+      args:
+        user: david
+        uid: 1000
+        port: "9000"
+      context: ./
+      dockerfile: Dockerfile
+    container_name: medical_app
+    user: "1000:1000"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - mongo
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+    networks:
+      - medical-network
+#  install-deps:
+#    image: node:18-alpine
+#    command: npm install
+#    volumes:
+#      - .:/usr/src/app
+#    working_dir: /usr/src/app
+#    user: "${USER_GROUP:-1000}:${USER_GROUP:-1000}"
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "81:80"
+    volumes:
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - medical_app
+    networks:
+      - medical-network
+
+networks:
+  medical-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
