@@ -14,7 +14,6 @@ services:
     ports:
       - "27017:27017"
   medical_app:
-    image: "medical_app"
     build:
       args:
         user: david
@@ -33,13 +32,13 @@ services:
       - APP_DEBUG=true
     networks:
       - medical-network
-#  install-deps:
-#    image: node:18-alpine
-#    command: npm install
-#    volumes:
-#      - .:/usr/src/app
-#    working_dir: /usr/src/app
-#    user: "${USER_GROUP:-1000}:${USER_GROUP:-1000}"
+  install-deps:
+    image: node:18-alpine
+    command: npm install
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    user: "${USER_GROUP:-1000}:${USER_GROUP:-1000}"
   nginx:
     image: nginx:alpine
     restart: always
