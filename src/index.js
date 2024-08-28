@@ -19,14 +19,11 @@ const swaggerSpec = {
                 url: 'http://localhost:9000',
             },
             {
-                url: 'https://backend-testing-production.up.railway.app',
+                url: 'https://startling-gelato-ce4e1f.netlify.app',
             },
             {
-                url: 'https://medical-farmacy.herokuapp.com/',
-            },
-            {
-                url: 'https://backend-testing-1p5v.onrender.com/',
-            },
+                url: 'https://vigorously-grand-ewe.ngrok-free.app',
+            }
         ]
     },
     apis: [`${path.join(__dirname, './routes/*.js')}`],
@@ -50,7 +47,13 @@ if (process.env.URL_FRONTEND) {
 }
 
 app.use(cors(corsOptions));
-app.use( express.json());
+app.use(express.json());
+
+app.use((req, res, next) => {
+    res.setHeader('ngrok-skip-browser-warning', 'true');
+    next();
+});
+
 app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
 
 // Rutas
