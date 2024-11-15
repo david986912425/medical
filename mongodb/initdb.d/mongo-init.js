@@ -17,7 +17,7 @@ db.createCollection('products');
 
 db.users.insertOne({
     name: 'Roxana',
-    lastname: 'Quispe',
+    lastname: 'Condori',
     email: 'roxana@gmail.com',
     password: '$2a$12$s13hbY2sF5Zouhrw.Gri9.DdzsStJJldJSQ4AeMKBwzVroNPjfGaG',
     role: 'admin'
@@ -35,7 +35,7 @@ db.categories.insertOne({
     name: 'Medicamentos'
 });
 
-var category = db.categories.findOne({ name: 'Medicamentos' });
+const category = db.categories.findOne({name: 'Medicamentos'});
 
 db.products.insertMany([
     {

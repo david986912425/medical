@@ -2,7 +2,7 @@ const { response, request } = require("express");
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const { sanitizeUserEmailInput } = require("../helpers/validaciones")
-const usuariosGet = async(req = request, res) => {
+const usuariosGet = async( res , req = request) => {
 
     const { limite = 20, desde = 0 } = req.query;
 

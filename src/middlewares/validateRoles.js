@@ -1,7 +1,8 @@
 const user = require("../models/user");
+const {response} = require("express");
 
 const validateUserRol = ( ...roles) => {
-    return async(req, res=response, next) => {
+    return async(req, next ,res=response ) => {
         if (!req.uid) {
             return res.status(401).json({msg: 'Token no validado'});
         }
